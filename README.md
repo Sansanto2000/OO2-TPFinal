@@ -29,6 +29,5 @@ Hecho esto ahora vera un servidor en la ventana "Servers" haga doble click sobre
 
 Realizados todos los pasos anteriores, para ejecutar el software basta con ir al Eclipse, hacer click derecho sobre la carpeta raiz del proyecto y cliquear en "RunAs/RunOnServer", en la ventana emergente seleccionar el servidor antes construido y precionar siguiente hasta que el servidor se levante. Una vez se habra una ventana vacia en el navegador el servidor estara listo para su uso (puede cerrar la ventana si lo desea). 
 
-En esta carpeta compartida de postman puede ver todos los endpoints del servicio, en la subcarpeta OO2: .
-1. 
+En esta carpeta compartida de postman puede ver todos los endpoints del servicio, en la subcarpeta OO2: https://solar-spaceship-105447.postman.co/workspace/New-Team-Workspace~1e7118bf-6cc1-46ce-8b33-3f1717df3a28/collection/18209837-972e4a22-ca38-4169-bba8-9fce005e7178?action=share&creator=18209837. Tendra que solicitar permiso para poder editarlo, pero cuando lo haga le llegara una notificaccion a nuestros equipos por lo que una vez lo haga lo habilitaremos a la brevedad.
 
