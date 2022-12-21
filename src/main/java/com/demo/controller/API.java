@@ -2,15 +2,15 @@ package com.demo.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.demo.controller.schema.RegisterClientSchema;
 import com.demo.controller.schema.RegisterOrderSchema;
 import com.demo.controller.schema.RegisterProductSchema;
+import com.demo.controller.schema.RegisterSellerSchema;
 import com.demo.model.Client;
 import com.demo.model.Product;
 import com.demo.model.Seller;
 import com.demo.model.Order;
 import com.demo.service.ProxyServiceImpl;
-import com.demo.util.deliverymechanism.DeliveryMechanismDict;
-import com.demo.util.waytopay.WayToPayDict;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,8 +33,8 @@ public class API {
 	
 	// Endpoints para persons
 	@PostMapping("/seller")
-	public ResponseEntity<Seller> registerSeller(@RequestParam String name, @RequestParam String address) {
-		Seller s = proxyService.registerSeller(name, address);
+	public ResponseEntity<Seller> registerSeller(@RequestBody RegisterSellerSchema request) {
+		Seller s = proxyService.registerSeller(request.getName(), request.getAddress());
 		if(s == null)
 			return new ResponseEntity<Seller>(HttpStatus.BAD_REQUEST);
 		return new ResponseEntity<Seller>(s, HttpStatus.CREATED);
@@ -49,8 +49,8 @@ public class API {
 	}
 	
 	@PostMapping("/client")
-    public ResponseEntity<Client> registerClient(@RequestParam String name, @RequestParam String address) {
-		Client c = proxyService.registerClient(name, address);
+    public ResponseEntity<Client> registerClient(@RequestBody RegisterClientSchema request) {
+		Client c = proxyService.registerClient(request.getName(), request.getAddress());
 		if(c == null)
 			return new ResponseEntity<Client>(HttpStatus.BAD_REQUEST);
 		return new ResponseEntity<Client>(c, HttpStatus.CREATED);
@@ -66,15 +66,12 @@ public class API {
 	
 	// Endpoints para products
 	@PostMapping("/product")
-	public ResponseEntity<Product> registerProduct(@RequestBody RegisterProductSchema rps) {
-		Seller pe = proxyService.findSellerById(rps.getSeller_id());
-		if(pe == null) 
+	public ResponseEntity<Product> registerProduct(@RequestBody RegisterProductSchema request) {
+		Product p = proxyService.registerProduct(request.getName(), request.getDescription(), 
+				request.getPrice(), request.getStock(), request.getSeller_id());
+		if(p == null) 
 			return new ResponseEntity<Product>(HttpStatus.BAD_REQUEST);
-		else {
-			Product pr = new Product(rps.getName(), rps.getDescription(), rps.getPrice(), rps.getStock(), pe);
-			proxyService.registerProduct(pr);
-			return new ResponseEntity<Product>(pr, HttpStatus.CREATED);
-		}
+		return new ResponseEntity<Product>(p, HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/product")
@@ -85,32 +82,11 @@ public class API {
 	
 	
 	@PostMapping("/order")
-    public ResponseEntity<Order> registerOrder(@RequestBody RegisterOrderSchema ros) {
-		//Comprueba existencia del cliente
-		Client c = proxyService.findClientById(ros.getClient_id());
-		if(c == null)
+    public ResponseEntity<Order> registerOrder(@RequestBody RegisterOrderSchema request) {
+		Order o = proxyService.registerOrder(request.getAmmount(), request.getClient_id(), 
+				request.getProduct_id(), request.getDeliverymechanism(), request.getWaytopay());
+		if(o == null)
 			return new ResponseEntity<Order>(HttpStatus.BAD_REQUEST);
-		//Comprueba existencia del producto
-		Product p = proxyService.findProductById(ros.getProduct_id());
-		if(p == null)
-			return new ResponseEntity<Order>(HttpStatus.BAD_REQUEST);
-		//Comprueba existencia del metodo de pago elegido
-		if(!WayToPayDict.containsKey(ros.getWaytopay()))
-			return new ResponseEntity<Order>(HttpStatus.BAD_REQUEST);
-		//Comprueba existencia del mecanismo de entrega elegido
-		if(!DeliveryMechanismDict.containsKey(ros.getDeliverymechanism()))
-			return new ResponseEntity<Order>(HttpStatus.BAD_REQUEST);
-		//Comprueba disponibilidad de stock, en caso de que haya entonces lo actualiza
-		if(p.getStock() < ros.getAmmount())
-			return new ResponseEntity<Order>(HttpStatus.BAD_REQUEST);
-		p.setStock(p.getStock()-ros.getAmmount());
-		//Genera y guarda la orden
-		Order o = new Order(ros.getAmmount(), c, p, ros.getDeliverymechanism(), ros.getWaytopay());
-		Order resp = proxyService.registerOrder(o);
-		if(resp == null)
-			return new ResponseEntity<Order>(HttpStatus.BAD_REQUEST);
-		//Guarda el producto acutualizado
-		proxyService.updateProduct(p);
         return new ResponseEntity<Order>(o, HttpStatus.OK);
     }
 	

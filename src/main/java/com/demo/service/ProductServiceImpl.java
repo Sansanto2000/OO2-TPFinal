@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.Optional;
 
 import com.demo.model.Product;
+import com.demo.model.Seller;
 import com.demo.repository.ProductRepository;
+import com.demo.repository.SellerRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,8 @@ public class ProductServiceImpl implements ProductService {
 	
 	@Autowired
 	ProductRepository productRepository;
+	@Autowired
+	SellerRepository sellerRepository;
 
 	@Override
 	public List<Product> findProducts(String name) {
@@ -23,17 +27,20 @@ public class ProductServiceImpl implements ProductService {
 			list = new ArrayList<Product>();
 		return list;
 	}
-
-	@Override
-	public Product registerProduct(Product product) {
-		productRepository.save(product);
-		return product;
-	}
 	
 	@Override
-	public Product updateProduct(Product product) {
-		productRepository.save(product);
-		return product;
+	public Product registerProduct(String name, String description, double price, int stock, long seller_id) {
+		//Comprueba que el stock indicado para el producto no sea negativo
+		if(stock < 0)
+			return null;
+		//Comprueba existencia del vendedor
+		Optional<Seller> os = sellerRepository.findById(seller_id);
+		if(os.isEmpty()) 
+			return null;
+		//Genera y guarda el producto
+		Product p = new Product(name, description, price, stock, os.get());
+		productRepository.save(p);
+		return p;
 	}
 
 	@Override
@@ -41,8 +48,7 @@ public class ProductServiceImpl implements ProductService {
 		Optional<Product> op = productRepository.findById(id);
 		if(op.isEmpty())
 			return null;
-		else
-			return op.get();
+		return op.get();
 	}
 
 }

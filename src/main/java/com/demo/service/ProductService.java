@@ -8,7 +8,6 @@ public interface ProductService {
 	
 	public List<Product> findProducts(String name);
 	public Product findProductById(long id);
-	public Product registerProduct(Product product);
-    public Product updateProduct(Product product);
+	public Product registerProduct(String name, String description, double price, int stock, long seller_id);
 	
 }

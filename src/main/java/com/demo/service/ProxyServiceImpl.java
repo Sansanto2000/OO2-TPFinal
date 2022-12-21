@@ -56,28 +56,23 @@ public class ProxyServiceImpl implements ProxyService {
 	}
 
 	@Override
-	public Product registerProduct(Product product) {
-		return productService.registerProduct(product);
-	}
-	
-	@Override
-	public Product updateProduct(Product product) {
-		return productService.updateProduct(product);
+	public Product registerProduct(String name, String description, double price, int stock, long seller_id) {
+		return productService.registerProduct(name, description, price, stock, seller_id);
 	}
 
 	@Override
 	public Product findProductById(long id) {
 		return productService.findProductById(id);
 	}
-
+	
 	@Override
-	public Order registerOrder(Order order) {
-		return orderService.registerOrder(order);
+	public Order registerOrder(int ammount, long client_id, long product_id, String deliverymechanism, String waytopay) {
+		return orderService.registerOrder(ammount, client_id, product_id, deliverymechanism, waytopay);
 	}
+
 
 	@Override
 	public Order findOrderById(long id) {
 		return orderService.findOrderById(id);
 	}
-
 }
