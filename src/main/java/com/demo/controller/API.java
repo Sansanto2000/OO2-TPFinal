@@ -10,7 +10,7 @@ import com.demo.model.Client;
 import com.demo.model.Product;
 import com.demo.model.Seller;
 import com.demo.model.Order;
-import com.demo.service.ProxyServiceImpl;
+import com.demo.service.ProxyService;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,7 +29,7 @@ import org.springframework.http.ResponseEntity;
 public class API {
 	
 	@Autowired
-	ProxyServiceImpl proxyService;
+	ProxyService proxyService;
 	
 	// Endpoints para persons
 	@PostMapping("/seller")

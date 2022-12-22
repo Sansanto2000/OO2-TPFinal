@@ -9,16 +9,18 @@ import com.demo.model.Seller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class ProxyServiceImpl implements ProxyService {
 	
 	@Autowired
-	PersonServiceImpl personService;
+	PersonService personService;
 	@Autowired
-	ProductServiceImpl productService;
+	ProductService productService;
 	@Autowired
-	OrderServiceImpl orderService;
+	OrderService orderService;
 
 	@Override
 	public Seller registerSeller(String name, String address) {

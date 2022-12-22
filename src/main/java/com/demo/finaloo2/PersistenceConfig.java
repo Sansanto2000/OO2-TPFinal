@@ -6,8 +6,11 @@ import java.util.Properties;
 import jakarta.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -18,6 +21,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
+@EntityScan("com.demo.model")
+@EnableJpaRepositories("com.demo.repository")
+@ComponentScan(basePackages = {"com.demo"})
 public class PersistenceConfig {
 
 	private static final String MODEL_PACKAGE = "com.demo.model";
