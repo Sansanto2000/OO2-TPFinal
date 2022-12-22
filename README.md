@@ -2,7 +2,7 @@
 
 ## Requisitos:
 - Tener instalado Docker
-- 
+- Tener instalado Tomcat10
 - Tener instalado algún Iddle para ejecutar Java.
 
 ### Opcional:
