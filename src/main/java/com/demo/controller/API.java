@@ -23,7 +23,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 
+@Controller
 @RestController
 @RequestMapping("/api")
 public class API {
@@ -41,7 +43,7 @@ public class API {
 	}
 	
 	@GetMapping("/seller")
-    public ResponseEntity<Seller> FindSeller(@RequestParam String name) {
+    public ResponseEntity<Seller> findSeller(@RequestParam String name) {
 		Seller s = proxyService.findSellerByName(name);
 		if(s == null)
 			return new ResponseEntity<Seller>(HttpStatus.NOT_FOUND);
@@ -57,7 +59,7 @@ public class API {
 	}
 	
 	@GetMapping("/client")
-    public ResponseEntity<Client> FindClient(@RequestParam String name) {
+    public ResponseEntity<Client> findClient(@RequestParam String name) {
 		Client c = proxyService.findClientByName(name);
 		if(c == null)
 			return new ResponseEntity<Client>(HttpStatus.NOT_FOUND);

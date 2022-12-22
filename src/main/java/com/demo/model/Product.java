@@ -1,5 +1,7 @@
 package com.demo.model;
 
+import java.util.Objects;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -32,6 +34,31 @@ public class Product {
 		this.price = price;
 		this.stock = stock;
 		this.seller = seller;
+	}
+
+	@Override
+	public String toString() {
+		return "Product [id=" + id + ", name=" + name + ", description=" + description + ", price=" + price + ", stock="
+				+ stock + ", seller=" + seller + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(description, id, name, price, seller, stock);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Product other = (Product) obj;
+		return Objects.equals(description, other.description) && id == other.id && Objects.equals(name, other.name)
+				&& Double.doubleToLongBits(price) == Double.doubleToLongBits(other.price)
+				&& Objects.equals(seller, other.seller) && stock == other.stock;
 	}
 
 	public long getId() {

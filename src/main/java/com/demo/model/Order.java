@@ -1,6 +1,9 @@
 package com.demo.model;
 
 import com.demo.util.waytopay.WayToPayDict;
+
+import java.util.Objects;
+
 import com.demo.util.deliverymechanism.DeliveryMechanismDict;
 
 import jakarta.persistence.Entity;
@@ -36,6 +39,31 @@ public class Order {
 		this.product = product;
 		this.deliverymechanism = deliverymechanism;
 		this.waytopay = waytopay;
+	}
+
+	@Override
+	public String toString() {
+		return "Order [id=" + id + ", ammount=" + ammount + ", client=" + client + ", product=" + product
+				+ ", deliverymechanism=" + deliverymechanism + ", waytopay=" + waytopay + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(ammount, client, deliverymechanism, id, product, waytopay);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Order other = (Order) obj;
+		return ammount == other.ammount && Objects.equals(client, other.client)
+				&& Objects.equals(deliverymechanism, other.deliverymechanism) && id == other.id
+				&& Objects.equals(product, other.product) && Objects.equals(waytopay, other.waytopay);
 	}
 
 	public double calculateTotalCost() {

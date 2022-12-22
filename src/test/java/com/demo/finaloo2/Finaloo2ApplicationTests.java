@@ -1,29 +1,34 @@
 package com.demo.finaloo2;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+//import static org.junit.jupiter.api.Assertions.assertEquals;
+//import static org.junit.jupiter.api.Assertions.assertNull;
 
-import com.demo.model.Seller;
+import org.junit.jupiter.api.Test;
+//import org.junit.jupiter.api.extension.ExtendWith;
+//import org.springframework.test.context.junit.jupiter.SpringExtension;
+
 import com.demo.service.ProxyService;
 
-@SpringBootTest
-class Finaloo2ApplicationTests {
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 
-	@Autowired
-	ProxyService proxyService;
+//@ExtendWith(SpringExtension.class)
+@SpringBootTest(properties = {
+		//"jdbc:mysql://localhost:3308/dboo2", 
+		//"spring.datasource.username=root",
+		//"spring.datasource.password=root",
+		//"spring.jpa.hibernate.ddl-auto=create-drop"
+	})
+class Finaloo2ApplicationTests {
 	
 	@Test
 	void contextLoads() {
 		
 	}
 	
-	@Test
-	public void testRegisterSeller() {
-		Seller s = proxyService.registerSeller("galileo", "Italia, Toscana, Basílica de la Santa Cruz");
-		//if(s == null)
-			//return new ResponseEntity<Seller>(HttpStatus.BAD_REQUEST);
-		assert(true);
-	}
+	@Autowired
+	ProxyService proxyService;
+
 
 }
