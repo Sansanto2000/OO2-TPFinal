@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class ProxyServiceImpl implements ProxyService {
+public class AggregatorServiceImpl implements AggregatorService {
 	
 	@Autowired
 	PersonService personService;

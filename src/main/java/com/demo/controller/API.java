@@ -10,7 +10,7 @@ import com.demo.model.Client;
 import com.demo.model.Product;
 import com.demo.model.Seller;
 import com.demo.model.Order;
-import com.demo.service.ProxyService;
+import com.demo.service.AggregatorService;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,12 +31,12 @@ import org.springframework.stereotype.Controller;
 public class API {
 	
 	@Autowired
-	ProxyService proxyService;
+	AggregatorService aggregatorService;
 	
 	// Endpoints para persons
 	@PostMapping("/seller")
 	public ResponseEntity<Seller> registerSeller(@RequestBody RegisterSellerSchema request) {
-		Seller s = proxyService.registerSeller(request.getName(), request.getAddress());
+		Seller s = aggregatorService.registerSeller(request.getName(), request.getAddress());
 		if(s == null)
 			return new ResponseEntity<Seller>(HttpStatus.BAD_REQUEST);
 		return new ResponseEntity<Seller>(s, HttpStatus.CREATED);
@@ -44,7 +44,7 @@ public class API {
 	
 	@GetMapping("/seller")
     public ResponseEntity<Seller> findSeller(@RequestParam String name) {
-		Seller s = proxyService.findSellerByName(name);
+		Seller s = aggregatorService.findSellerByName(name);
 		if(s == null)
 			return new ResponseEntity<Seller>(HttpStatus.NOT_FOUND);
 		return new ResponseEntity<Seller>(s, HttpStatus.OK);
@@ -52,7 +52,7 @@ public class API {
 	
 	@PostMapping("/client")
     public ResponseEntity<Client> registerClient(@RequestBody RegisterClientSchema request) {
-		Client c = proxyService.registerClient(request.getName(), request.getAddress());
+		Client c = aggregatorService.registerClient(request.getName(), request.getAddress());
 		if(c == null)
 			return new ResponseEntity<Client>(HttpStatus.BAD_REQUEST);
 		return new ResponseEntity<Client>(c, HttpStatus.CREATED);
@@ -60,7 +60,7 @@ public class API {
 	
 	@GetMapping("/client")
     public ResponseEntity<Client> findClient(@RequestParam String name) {
-		Client c = proxyService.findClientByName(name);
+		Client c = aggregatorService.findClientByName(name);
 		if(c == null)
 			return new ResponseEntity<Client>(HttpStatus.NOT_FOUND);
     	return new ResponseEntity<Client>(c, HttpStatus.OK);
@@ -69,7 +69,7 @@ public class API {
 	// Endpoints para products
 	@PostMapping("/product")
 	public ResponseEntity<Product> registerProduct(@RequestBody RegisterProductSchema request) {
-		Product p = proxyService.registerProduct(request.getName(), request.getDescription(), 
+		Product p = aggregatorService.registerProduct(request.getName(), request.getDescription(), 
 				request.getPrice(), request.getStock(), request.getSeller_id());
 		if(p == null) 
 			return new ResponseEntity<Product>(HttpStatus.BAD_REQUEST);
@@ -78,14 +78,14 @@ public class API {
 	
 	@GetMapping("/product")
 	public ResponseEntity<List<Product>> findProducts(@RequestParam String name) {
-		List<Product> list = proxyService.findProducts(name);
+		List<Product> list = aggregatorService.findProducts(name);
 		return new ResponseEntity<List<Product>>(list, HttpStatus.OK);
 	}
 	
 	
 	@PostMapping("/order")
     public ResponseEntity<Order> registerOrder(@RequestBody RegisterOrderSchema request) {
-		Order o = proxyService.registerOrder(request.getAmmount(), request.getClient_id(), 
+		Order o = aggregatorService.registerOrder(request.getAmmount(), request.getClient_id(), 
 				request.getProduct_id(), request.getDeliverymechanism(), request.getWaytopay());
 		if(o == null)
 			return new ResponseEntity<Order>(HttpStatus.BAD_REQUEST);
@@ -94,7 +94,7 @@ public class API {
 	
 	@GetMapping("order/calculateTotalCost")
     public ResponseEntity<Double> calculateOrderTotalCost(@RequestParam long orderId) {
-		Order o = proxyService.findOrderById(orderId);
+		Order o = aggregatorService.findOrderById(orderId);
 		if(o == null)
 			return new ResponseEntity<Double>(HttpStatus.BAD_REQUEST);
         return new ResponseEntity<Double>(o.calculateTotalCost(), HttpStatus.OK);
