@@ -1,0 +1,18 @@
+Ejercicio 19. Mercado de Objetos
+
+Nota: este ejercicio es del estilo de los que encontrarán en la evaluación parcial
+Queremos programar en objetos una versión simplificada de un mercado on-line similar a e-Bay o MercadoLibre. 
+
+============================================================================================
+
+La  idea es realizar los 2 enfoques del mismo problema. 
+
+Por un lado enfocarnos en la construccion de una API y la persistencia del modelo en una BD relacional. 
+
+El otro enfoque esta mas orientado a microservicios. La idea es implementar este enfoque utilizando arquitecturas que se usan en los microservicios.
+
+
+
+
+
+
