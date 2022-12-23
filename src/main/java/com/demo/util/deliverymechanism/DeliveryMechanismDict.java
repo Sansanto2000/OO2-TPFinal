@@ -1,4 +1,4 @@
-package com.demo.util.deliverymechanism;
+ package com.demo.util.deliverymechanism;
 
 import java.util.HashMap;
 
@@ -19,6 +19,6 @@ public class DeliveryMechanismDict {
 	
 	public static boolean containsKey(String key) {
 	    return dict.containsKey(key);
-	}
+	} 
 
 }

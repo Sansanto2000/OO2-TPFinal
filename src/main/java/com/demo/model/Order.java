@@ -69,8 +69,10 @@ public class Order {
 	public double calculateTotalCost() {
         Double costo_bruto = this.ammount*this.product.getPrice();
         Double costo_envio = DeliveryMechanismDict.get(deliverymechanism).cost(this);
-        Double costo_forma_de_pago = WayToPayDict.get(waytopay).cost(this)*(costo_bruto+costo_envio);
+        Double costo_forma_de_pago = WayToPayDict.get(waytopay).cost(this)*(costo_bruto + costo_envio);
+        
         return costo_bruto+costo_envio+costo_forma_de_pago;
+        
     }
 
 	public long getId() {

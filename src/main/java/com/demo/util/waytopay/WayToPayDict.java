@@ -9,7 +9,7 @@ public class WayToPayDict {
 	static HashMap<String, WayToPay> dict = new HashMap<String, WayToPay>();
 	static {
 		dict.put("cash", Cash.getInstance());
-		dict.put("installments6", Cash.getInstance());
+		dict.put("installments6", Installments6.getInstance());
 	}
 	
 	public static WayToPay get(String key) {

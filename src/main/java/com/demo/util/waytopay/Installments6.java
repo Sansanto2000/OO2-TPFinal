@@ -17,7 +17,6 @@ public class Installments6 implements WayToPay{
 
 	@Override
     public double cost(Order order) {
-        // TODO Auto-generated method stub
         return 0.2;
     }
 
